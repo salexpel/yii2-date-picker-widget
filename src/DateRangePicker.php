@@ -70,6 +70,11 @@ class DateRangePicker extends InputWidget
             Html::addCssClass($this->optionsTo, 'input-' . $this->size);
             Html::addCssClass($this->containerOptions, 'input-group-' . $this->size);
         }
+
+        if (!isset($this->options['type']) && !isset($this->optionsTo['type'])) {
+            $this->optionsTo['type'] = $this->options['type'] = 'date';
+        }
+
         Html::addCssClass($this->containerOptions, 'input-group input-daterange');
         Html::addCssClass($this->options, 'form-control');
         Html::addCssClass($this->optionsTo, 'form-control');

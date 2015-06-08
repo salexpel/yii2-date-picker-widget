@@ -51,6 +51,11 @@ class DatePicker extends InputWidget
             Html::addCssClass($this->options, 'input-' . $this->size);
             Html::addCssClass($this->containerOptions, 'input-group-' . $this->size);
         }
+
+        if (!isset($this->options['type'])) {
+            $this->options['type'] = 'date';
+        }
+        
         Html::addCssClass($this->options, 'form-control');
         Html::addCssClass($this->containerOptions, 'input-group date');
     }
