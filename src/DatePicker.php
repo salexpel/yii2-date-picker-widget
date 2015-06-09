@@ -36,12 +36,17 @@ class DatePicker extends InputWidget
      */
     public $inline = false;
 
+    public $isDesktop = true;
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
+
+        $mobileDetect = \Yii::$app->get('mobileDetect');
+        $this->isDesktop = !($mobileDetect->isMobile() && $mobileDetect->isTablet());
 
         if ($this->inline) {
             $this->options['readonly'] = 'readonly';
@@ -52,10 +57,10 @@ class DatePicker extends InputWidget
             Html::addCssClass($this->containerOptions, 'input-group-' . $this->size);
         }
 
-        if (!isset($this->options['type'])) {
+        if (!$this->isDesktop && !isset($this->options['type'])) {
             $this->options['type'] = 'date';
         }
-        
+
         Html::addCssClass($this->options, 'form-control');
         Html::addCssClass($this->containerOptions, 'input-group date');
     }
@@ -65,7 +70,6 @@ class DatePicker extends InputWidget
      */
     public function run()
     {
-
         $input = $this->hasModel()
             ? Html::activeTextInput($this->model, $this->attribute, $this->options)
             : Html::textInput($this->name, $this->value, $this->options);
@@ -83,7 +87,9 @@ class DatePicker extends InputWidget
         }
         echo $input;
 
-        $this->registerClientScript();
+        if ($this->isDesktop) {
+            $this->registerClientScript();
+        }
     }
 
     /**

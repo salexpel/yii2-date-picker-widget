@@ -52,6 +52,8 @@ class DateRangePicker extends InputWidget
      */
     private $_template = '{inputFrom}<span class="input-group-addon">{labelTo}</span>{inputTo}';
 
+    public $isDesktop = true;
+
 
     /**
      * @inheritdoc
@@ -60,6 +62,10 @@ class DateRangePicker extends InputWidget
     public function init()
     {
         parent::init();
+
+        $mobileDetect = \Yii::$app->get('mobileDetect');
+        $this->isDesktop = !($mobileDetect->isMobile() && $mobileDetect->isTablet());
+
         if ((!$this->hasModel() && $this->nameTo === null) || ($this->hasModel() && $this->attributeTo === null)) {
             // @codeCoverageIgnoreStart
             throw new InvalidConfigException("Either 'nameTo', or 'model' and 'attributeTo' properties must be specified.");
@@ -71,7 +77,7 @@ class DateRangePicker extends InputWidget
             Html::addCssClass($this->containerOptions, 'input-group-' . $this->size);
         }
 
-        if (!isset($this->options['type']) && !isset($this->optionsTo['type'])) {
+        if (!$this->isDesktop && !isset($this->options['type']) && !isset($this->optionsTo['type'])) {
             $this->optionsTo['type'] = $this->options['type'] = 'date';
         }
 
@@ -119,7 +125,9 @@ class DateRangePicker extends InputWidget
                 ['{inputFrom}' => $inputFrom, '{labelTo}' => $this->labelTo, '{inputTo}' => $inputTo]
             ), $this->containerOptions);
 
-        $this->registerClientScript();
+        if ($this->isDesktop) {
+            $this->registerClientScript();
+        }
     }
 
     /**
