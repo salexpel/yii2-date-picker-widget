@@ -46,7 +46,7 @@ class DatePicker extends InputWidget
         parent::init();
 
         $mobileDetect = \Yii::$app->get('mobileDetect');
-        $this->isDesktop = !($mobileDetect->isMobile() && $mobileDetect->isTablet());
+        $this->isDesktop = !($mobileDetect->isMobile() || $mobileDetect->isTablet());
 
         if ($this->inline) {
             $this->options['readonly'] = 'readonly';

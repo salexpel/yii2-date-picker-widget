@@ -64,7 +64,7 @@ class DateRangePicker extends InputWidget
         parent::init();
 
         $mobileDetect = \Yii::$app->get('mobileDetect');
-        $this->isDesktop = !($mobileDetect->isMobile() && $mobileDetect->isTablet());
+        $this->isDesktop = !($mobileDetect->isMobile() || $mobileDetect->isTablet());
 
         if ((!$this->hasModel() && $this->nameTo === null) || ($this->hasModel() && $this->attributeTo === null)) {
             // @codeCoverageIgnoreStart
