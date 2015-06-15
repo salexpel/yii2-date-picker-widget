@@ -79,6 +79,13 @@ class DateRangePicker extends InputWidget
 
         if (!$this->isDesktop && !isset($this->options['type']) && !isset($this->optionsTo['type'])) {
             $this->optionsTo['type'] = $this->options['type'] = 'date';
+            if (isset($this->options['value'])) {
+                $this->options['value'] = date('Y-m-d', strtotime($this->options['value']));
+            }
+
+            if (isset($this->optionsTo['value'])) {
+                $this->optionsTo['value'] = date('Y-m-d', strtotime($this->optionsTo['value']));
+            }
         }
 
         Html::addCssClass($this->containerOptions, 'input-group input-daterange');

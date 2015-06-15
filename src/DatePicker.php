@@ -59,6 +59,9 @@ class DatePicker extends InputWidget
 
         if (!$this->isDesktop && !isset($this->options['type'])) {
             $this->options['type'] = 'date';
+            if (isset($options['value'])) {
+                $this->options['value'] = date('Y-m-d', strtotime($options['value']));
+            }
         }
 
         Html::addCssClass($this->options, 'form-control');
